@@ -12,8 +12,8 @@ fn main(){
     println!("Guesses: [{}]", guesses_allowed);
 
     for _x in 0..*guesses_allowed{
-       let mut guess = "".to_string();
-       println!("Enter your guess at the code in format: [xxxx]");
+       let mut guess = "".to_string(); //<--another way equivilent to: String::new()
+       println!("Enter your guess in the format: [xxxx]");
        io::stdin().read_line(&mut guess).expect("Failed to read the guess from user input");
        let guess_result = check_guess(&guess[..], secret);
        println!("{}-{}", guess_result.0, guess_result.1);
@@ -30,7 +30,7 @@ fn check_guess(guess : &str, secret : &str) -> (i32, i32) {
     let mut correct_cnt = 0;
     let mut close_cnt = 0;
     let mut secret_char_idx_used = [false, false, false, false]; //marks digits of the secret as used.
-    //enumerate the guess digits and find the matches:
+    //iterate the guess digits and find the correct matches:
     for (i,_j) in (0..4).enumerate() {
         let guess_char = &guess[i..i+1];
         if &secret[i..i+1] == guess_char {
@@ -38,13 +38,12 @@ fn check_guess(guess : &str, secret : &str) -> (i32, i32) {
             correct_cnt += 1;            
         }
     }
-    //enumerate the secret digits and find the 'write guess, wrong positions' count:
+    //iterate the secret digits and find the 'right digit in the wrong position' count:
     for (i,_j) in (0..4).enumerate() {
         let secret_char = &secret[i..i+1];
         if secret_char_idx_used[i] {
             continue; //this secret digits already guessed correctly.
         }
-        //iterate the guess digits:
         for(ii,_jj) in (0..4).enumerate(){
             let guess_char = &guess[ii..ii+1];
             if secret_char == guess_char{
