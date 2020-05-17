@@ -11,7 +11,6 @@ fn main(){
     println!("The secret is {}", secret);
     println!("Guesses: [{}]", guesses_allowed);
 
-    //TODO need to do for 'guess_max' loops
     for _x in 0..*guesses_allowed{
        let mut guess = "".to_string();
        println!("Enter your guess at the code in format: [xxxx]");
@@ -26,7 +25,7 @@ fn main(){
 }
 
 //Function checks a single guess
-//Takes a secret and a guess and returns the result in format [correct]-[close].
+//Takes a secret and a guess and returns the result tuple (correct, close/wrong position)
 fn check_guess(guess : &str, secret : &str) -> (i32, i32) {
     let mut correct_cnt = 0;
     let mut close_cnt = 0;
@@ -56,6 +55,5 @@ fn check_guess(guess : &str, secret : &str) -> (i32, i32) {
         }
     }
     let result = (correct_cnt, close_cnt);
-    //let result = format!("{}-{}", correct_cnt, close_cnt);
     result
 }
