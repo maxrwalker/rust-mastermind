@@ -7,17 +7,17 @@ fn main(){
         .read_line(&mut input)
         .expect("Failed to read the secret code");
     let secret = &input[0..4];
-    let guesses_allowed = &input[5..(input.len()-2)].parse::<i32>().unwrap(); //<- seems to need -2 to remove he line break and carriage return?
+    let guesses_allowed = input[5..(input.len()-2)].parse::<i32>().unwrap(); //<- seems to need -2 to remove he line break and carriage return?
     println!("The secret is {}", secret);
     println!("Guesses: [{}]", guesses_allowed);
 
-    for _x in 0..*guesses_allowed{
+    for _x in 0..guesses_allowed{
        let mut guess = "".to_string(); //<--another way equivilent to: String::new()
        println!("Enter your guess in the format: [xxxx]");
        io::stdin().read_line(&mut guess).expect("Failed to read the guess from user input");
-       let guess_result = check_guess(&guess[..], secret);
-       println!("{}-{}", guess_result.0, guess_result.1);
-       if guess_result.0 == 4 {
+       let (result_exact, result_close) = check_guess(&guess[..], secret);
+       println!("{}-{}", result_exact, result_close);
+       if result_exact == 4 {
            println!("You did it you genius!");
            break;
        }
